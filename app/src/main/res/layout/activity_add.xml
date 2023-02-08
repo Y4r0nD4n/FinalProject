@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    tools:context=".AddActivity">
+
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/time_input"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Time"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:minHeight="48dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/name_input" />-->
+
+
+    <!--    <EditText-->
+
+
+    <!--        android:id="@+id/on_or_off_input"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="96dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="On Or Off"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:minHeight="48dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/time_input_TV" />-->
+
+    <EditText
+        android:id="@+id/name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Alarm Name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.27" />
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Add"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.481" />
+
+    <TextView
+        android:id="@+id/time_input_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:text="time"
+        android:textSize="48dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.095" />
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.36">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="5dp">-->
+
+    <Button
+        android:id="@+id/button_SU"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="SU"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3"
+        tools:ignore="DuplicateClickableBoundsCheck" />
+
+    <Button
+        android:id="@+id/button_MO"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="MO"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <Button
+        android:id="@+id/button_TU"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="TU"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <Button
+        android:id="@+id/button_WE"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="WE"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <Button
+        android:id="@+id/button_TH"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="TH"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <Button
+        android:id="@+id/button_FR"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="FR"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <Button
+        android:id="@+id/button_SA"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:padding="5dp"
+        android:shadowColor="#5973FF"
+        android:text="SA"
+        android:textColorHighlight="#2FADCD"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367"
+        app:strokeColor="#2196F3" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="395dp"
+        android:layout_height="189dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.719"></androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--        </LinearLayout>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
