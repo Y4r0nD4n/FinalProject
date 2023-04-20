@@ -1,5 +1,10 @@
 package com.example.finalproject;
 
+import static com.example.finalproject.AlarmsOperations.SchedulingAlarm.cancelAlarm;
+import static com.example.finalproject.AlarmsOperations.SchedulingAlarm.getAlarm_time_Hour;
+import static com.example.finalproject.AlarmsOperations.SchedulingAlarm.getAlarm_time_Minute;
+import static com.example.finalproject.AlarmsOperations.SchedulingAlarm.scheduleAlarm;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -14,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class UpdateActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +40,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
             flag_button_WE = false, flag_button_TH = false, flag_button_FR = false, flag_button_SA = false;
 
 
+    String savedTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,9 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         update_button.setOnClickListener(this);
         time_input_update_TV.setOnClickListener(this);
         getAndSetIntentData();
+
+        savedTime= getIntent().getStringExtra("alarm_time");
+
 
         button_SU = findViewById(R.id.button_SU);
         button_MO = findViewById(R.id.button_MO);
@@ -151,13 +162,50 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         if(view == update_button){
 
-        checkAndSetInsertValues_update();
+//            if(savedTime!=time_input_update_TV.getText().toString()) {
+//                Calendar c = Calendar.getInstance();
+//
+//                int h = getAlarm_time_Hour(savedTime);
+//                int m = getAlarm_time_Minute(savedTime);
+//                c.set(Calendar.HOUR_OF_DAY, h);
+//                c.set(Calendar.MINUTE, m);
+//                c.set(Calendar.SECOND, 0);
+//                if(c.before(Calendar.getInstance())){
+//                    c.add(Calendar.DATE,1);
+//                }
+//
+//                int id = h * 100 + m;
+//                scheduleAlarm(c, this, id);
+//
+//
+//
+//                Calendar calendar = Calendar.getInstance();
+//
+//                int h2 = getAlarm_time_Hour(time_input_update_TV.getText().toString());
+//                int m2 = getAlarm_time_Minute(time_input_update_TV.getText().toString());
+//                calendar.set(Calendar.HOUR_OF_DAY, h2);
+//                calendar.set(Calendar.MINUTE, m2);
+//                calendar.set(Calendar.SECOND, 0);
+//                if(calendar.before(Calendar.getInstance())){
+//                    calendar.add(Calendar.DATE,1);
+//                }
+//
+//                int id2 = h2 * 100 + m2;
+//                scheduleAlarm(c, this, id2);
+//
+////                makeAlarmOn();
+//            }
+
+
+            checkAndSetInsertValues_update();
         MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
         myDB.updateData(name_input_update_insert.trim(),
                 time_input_update_insert.trim(),
                 on_or_off_input_update_insert.trim(),
                 repeat_input_insert.trim(),
                 time_update);
+
+
 
 //// refresh database and main activity (and send to)
 
@@ -210,4 +258,12 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         }
 
     }
+
+//    private void makeAlarmOn() {
+//        if(on_or_off_update.equals("off")){
+//            on_or_off_update="on";
+//        }else{
+//
+//        }
+//    }
 }

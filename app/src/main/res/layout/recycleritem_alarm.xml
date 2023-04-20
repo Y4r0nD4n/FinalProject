@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr">
 
 
     <Button
         android:id="@+id/btnTime"
         android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="#1D222E"
         android:text="00:00"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="#039BE5"
-        android:textSize="35sp"
+        android:textSize="21sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
@@ -34,24 +36,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/btnTime"
         app:layout_constraintEnd_toStartOf="@+id/btnSwitch"
-        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnTime"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <Switch
-        android:id="@+id/btnSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:thumbTint="@drawable/thump_swipe_button"
-        app:layout_constraintBottom_toBottomOf="@+id/btnTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
-        app:layout_constraintStart_toEndOf="@+id/btnTime"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59000003" />
+        app:layout_constraintVertical_bias="0.06999999" />
 
     <!--    <androidx.cardview.widget.CardView-->
     <!--        android:layout_width="242dp"-->
@@ -73,15 +61,30 @@
 
     <!--    </androidx.cardview.widget.CardView>-->
 
+    <Switch
+        android:id="@+id/btnSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:thumbTint="@drawable/thump_swipe_button"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toEndOf="@+id/btnTime"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.525" />
+
     <Button
         android:id="@+id/button_SU"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="SU"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,13 +98,14 @@
 
     <Button
         android:id="@+id/button_MO"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="MO"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,13 +119,14 @@
 
     <Button
         android:id="@+id/button_TU"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="TU"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,13 +140,14 @@
 
     <Button
         android:id="@+id/button_WE"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="WE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,13 +160,14 @@
 
     <Button
         android:id="@+id/button_TH"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="TH"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -174,13 +181,14 @@
 
     <Button
         android:id="@+id/button_FR"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="FR"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -194,12 +202,13 @@
 
     <Button
         android:id="@+id/button_SA"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/round_button"
         android:padding="5dp"
         android:shadowColor="#5973FF"
         android:text="SA"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHighlight="#2FADCD"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -207,7 +216,7 @@
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toEndOf="@+id/btnTime"
         app:layout_constraintTop_toBottomOf="@+id/AlarmName"
-        app:layout_constraintVertical_bias="0.906"
+        app:layout_constraintVertical_bias="1.0"
         app:strokeColor="#2196F3"
         tools:ignore="TouchTargetSizeCheck" />
 

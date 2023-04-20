@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -89,38 +90,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
-//        ArrayList<Cell> list = new ArrayList<Cell>();
         Cursor cursor = null;
         if(db != null){
             cursor = db.rawQuery(query, null);
         }
 
-//        cursor.getString(0);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                // on below line we are adding the data from cursor to our array list.
-//                list.add(new Cell(cursor.getString(1),
-//                        cursor.getString(2),
-//                        (cursor.getString(3).equals("off")) ? false : true)
-//                        );
-//            } while (cursor.moveToNext());
-//            // moving our cursor to next.
-//        }
         return cursor;
     }
-//    MyDatabaseHelper myDB;
-//
-//    boolean checkPrimaryKey(String time){
-//
-//        Cursor cursor = myDB.readAllData();
-//            int pos=0;
-//        while (cursor.moveToNext()){
-//            if(time == ){
-//
-//            }
-//        }
-//        return false;
-//    }
 
 
     void updateData(String name, String time, String on_off, String repeat ,String position_time){
@@ -128,7 +104,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_TIME, time);
-        cv.put(COLUMN_ON_OR_OFF, on_off);
+//        cv.put(COLUMN_ON_OR_OFF, on_off);
         cv.put(COLUMN_REPEAT, repeat);
 
         long result = db.update(TABLE_NAME, cv, "alarm_time=?", new String[]{position_time});
@@ -142,7 +118,39 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    void clearAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        onUpgrade(db,1,1);
+    }
+
+    void updateSwitchData(String time, String on_off) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        Toast.makeText(context, "this is on or off: "+on_off,
+                Toast.LENGTH_SHORT).show();
+
+        cv.put(COLUMN_ON_OR_OFF, on_off);
+
+        String[] parts = time.split(":", 2);
+        String P1 = parts[0];
+        Log.d(P1, "getAlarm_time_Hour: P1= "+P1);
+        int hour =Integer.parseInt(P1);
+        String P2 = parts[1];
+        Log.d(P2, "getAlarm_time_Minute: P2= "+P2);
+        int min =Integer.parseInt(P2);
 
 
+        String whereClause = COLUMN_TIME + " = '" + hour + ":" + min + "'";
+        long result = db.update(TABLE_NAME, cv, whereClause,null);
+
+        if (result == -1) {
+            Toast.makeText(context, "Failed",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Updated Successfully!(Switch)",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+    }
 }
 

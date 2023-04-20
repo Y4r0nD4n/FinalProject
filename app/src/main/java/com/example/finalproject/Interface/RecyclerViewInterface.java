@@ -8,7 +8,7 @@ public interface RecyclerViewInterface {
 
     void onButtonTimeClick(Button btnTime, int position);
 
-    void onSwitchClick( int position, String flag);
+    void onSwitchClick( int position/*, String flag*/);
 
 
 }

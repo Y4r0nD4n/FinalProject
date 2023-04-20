@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder>{
 
-    private ArrayList <Cell> cells;
+    public static ArrayList <Cell> cells;
     private  RecyclerViewInterface recyclerViewInterface;
 
 
@@ -108,35 +108,44 @@ public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder
 
                 }
             });
-//            BtnSwitch.setOnClickListener(this);
-            BtnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            BtnSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if(isChecked){
-                        Log.d("VVVVWWWWAAAAAATTTTTT", "BtnSwitch: Checked");
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Cell currentCell = cells.get(position);
+                    String flag = currentCell.isCellOnOrOff(position)? "on":"off";
 
-                        if(recyclerViewInterface != null){
-                            int pos = getAdapterPosition();
 
-                            if(pos != RecyclerView.NO_POSITION){
-                                recyclerViewInterface.onSwitchClick(pos,"on");
-                            }
-                        }
-                    }
-                    else{
-                        Log.d("VVVVWWWWAAAAAATTTTTT", "BtnSwitch: Not Checked");
-                        if(recyclerViewInterface != null){
-                            int pos = getAdapterPosition();
+                    Log.d("SwitchState", "The Switch is " + flag);
 
-                            if(pos != RecyclerView.NO_POSITION){
-                                recyclerViewInterface.onSwitchClick(pos,"off");
-                            }
+                    if(recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION){
+
+                            recyclerViewInterface.onSwitchClick(pos/*,(isChecked ? "on" : "off")*/);
                         }
 
                     }
-
-                }
-            });
+                }});
+//            BtnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                    Log.d("SwitchState", "The Switch is " + (isChecked ? "on" : "off"));
+//
+//                    if(recyclerViewInterface != null){
+//                        int pos = getAdapterPosition();
+//
+//                        if(pos != RecyclerView.NO_POSITION){
+//
+//                            recyclerViewInterface.onSwitchClick(pos,(isChecked ? "on" : "off"));
+//                        }
+//                    }
+//
+//
+//                }
+//            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

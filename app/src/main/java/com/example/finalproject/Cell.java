@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,22 @@ public class Cell {
     public ArrayList getAlarm_time() {
         return alarm_time;
     }
+
+//    public int getAlarm_time_Minute(){
+//        String[] parts = alarm_time.toString().split(":", 2);
+//        String P1 = parts[1];
+//        Log.d(P1, "getAlarm_time_Minute: P1= "+P1);
+//        int min =Integer.parseInt(P1);
+//        return min;
+//    }
+//    public int getAlarm_time_Hour(){
+//        String[] parts = alarm_time.toString().split(":", 2);
+//        String P2 = parts[0];
+//        Log.d(P2, "getAlarm_time_Hour: P2= "+P2);
+//        int hour =Integer.parseInt(P2);
+//        return hour;
+//    }
+
 
     public void setAlarm_time(ArrayList alarm_time) {
         this.alarm_time = alarm_time;

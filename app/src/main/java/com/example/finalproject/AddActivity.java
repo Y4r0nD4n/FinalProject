@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import static com.example.finalproject.AlarmsOperations.SchedulingAlarm.scheduleAlarm;
+
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -33,7 +35,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     TextView time_input_TV;
     int hour, minutes;
     int hour_now, minute_now;
-    Calendar cal = Calendar.getInstance();
+//    Calendar cal = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
+
     String name_input_insert, time_input_insert, on_or_off_input_insert, repeat_input_insert;
 
     Button button_SU, button_MO, button_TU, button_WE, button_TH, button_FR, button_SA;
@@ -41,13 +45,15 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             flag_button_WE = false, flag_button_TH = false, flag_button_FR = false, flag_button_SA = false;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        minute_now = cal.get(Calendar.MINUTE);
-        hour_now = cal.get(Calendar.HOUR_OF_DAY);
+//        minute_now = cal.get(Calendar.MINUTE);
+//        hour_now = cal.get(Calendar.HOUR_OF_DAY);
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         //String timeCurrently = hour_now+":"+minute_now;
 
@@ -132,10 +138,17 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     on_or_off_input_insert.trim(),
                     repeat_input_insert);
 
-//// refresh database and main activity (and send to)
+//            int id = calendar.getTime().getHours()*100+calendar.getTime().getMinutes();
+//            if(calendar.before(Calendar.getInstance())){
+//                calendar.add(Calendar.DATE,1);
+//            }
+//
+//            scheduleAlarm(calendar, this, id);
+
+        //// refresh database and main activity (and send to)
 
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("refresh",1);
+//            intent.putExtra("refresh",1);
 
             startActivity(intent);
         }
@@ -148,6 +161,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     hour = selectedHour;
                     minutes = selectedMinute;
 
+
+//                    calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+//                    calendar.set(Calendar.MINUTE, selectedMinute);
+//                    calendar.set(Calendar.SECOND,0);
+//
                     time_input_TV.setText(String.format(Locale.getDefault(),"%02d:%02d",hour, minutes));
                 }
             };
@@ -178,51 +196,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             } else {
                 flag_button_SA = !flag_button_SA;
             }
-//            if(view == button_SU){
-//                if(flag_button_SU) {
-//                    flag_button_SU = false;
-//                }else
-//                    flag_button_SU = true;
-//            }
-//            else if(view == button_MO){
-//                if(flag_button_MO) {
-//                    flag_button_MO = false;
-//                }else
-//                    flag_button_MO = true;
-//            }
-//            else if(view == button_TU){
-//                if(flag_button_TU) {
-//                    flag_button_TU = false;
-//                }else
-//                    flag_button_TU = true;
-//            }
-//            else if(view == button_WE){
-//                if(flag_button_WE) {
-//                    flag_button_WE = false;
-//                }else
-//                    flag_button_WE = true;
-//            }
-//            else if(view == button_TH){
-//                if(flag_button_TH) {
-//                    flag_button_TH = false;
-//                }else
-//                    flag_button_TH = true;
-//            }
-//            else if(view == button_FR){
-//                if(flag_button_FR) {
-//                    flag_button_FR = false;
-//                }else
-//                    flag_button_FR = true;
-//            }
-//            else {
-//                if(flag_button_SA) {
-//                    flag_button_SA = false;
-//                    button_SA.setBackgroundColor(Color.RED);
-//                }else {
-//                    flag_button_SA = true;
-////                    button_SA.setBackground(Color.GREEN);
-//                }
-//            }
         }
     }
 
