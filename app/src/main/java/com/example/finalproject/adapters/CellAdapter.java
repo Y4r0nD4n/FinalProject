@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder
 
         holder.TV_AlarmName.setText(String.valueOf(currentCell.getAlarm_name().get(position)));
         holder.BtnTime.setText(String.valueOf(currentCell.getAlarm_time().get(position)));
+        holder.BtnSwitch.setText(String.valueOf(currentCell.getAlarm_on_or_off().get(position)));
 
 
         holder.BtnSwitch.setChecked(/*true*/currentCell.isCellOnOrOff(position));
@@ -83,8 +85,10 @@ public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder
         public TextView TV_AlarmName;
         @SuppressLint("UseSwitchCompatOrMaterialCode")
         public Switch BtnSwitch;
-        private Context context;
-
+//        private Context context;
+//        Cursor cursor;
+//        MyDatabaseHelper myDatabaseHelper;
+//        StringBuffer stringBuffer;
 
         public CellViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
@@ -92,6 +96,7 @@ public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder
             BtnTime = itemView.findViewById(R.id.btnTime);
             TV_AlarmName = itemView.findViewById(R.id.AlarmName);
             BtnSwitch = itemView.findViewById(R.id.btnSwitch);
+
 
             BtnTime.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,23 +113,25 @@ public class CellAdapter extends RecyclerView.Adapter<CellAdapter.CellViewHolder
 
                 }
             });
-
+//            BtnSwitch.setChecked(true);
             BtnSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
                     int position = getAdapterPosition();
                     Cell currentCell = cells.get(position);
-                    String flag = currentCell.isCellOnOrOff(position)? "on":"off";
+                    BtnSwitch.setChecked(!currentCell.isCellOnOrOff(position));
+                    String flag = !currentCell.isCellOnOrOff(position)? "on":"off";
+                    BtnSwitch.setText(flag);
 
-
-                    Log.d("SwitchState", "The Switch is " + flag);
-
+//                    BtnSwitch.setText(flag);
                     if(recyclerViewInterface != null){
                         int pos = getAdapterPosition();
 
                         if(pos != RecyclerView.NO_POSITION){
 
-                            recyclerViewInterface.onSwitchClick(pos/*,(isChecked ? "on" : "off")*/);
+                            recyclerViewInterface.onSwitchClick(pos);
                         }
 
                     }

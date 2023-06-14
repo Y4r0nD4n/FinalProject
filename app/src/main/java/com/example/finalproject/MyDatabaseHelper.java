@@ -27,7 +27,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TIME = "alarm_time";
     private static final String COLUMN_NAME = "alarm_name";
     private static final String COLUMN_ON_OR_OFF ="alarm_on_or_off";
-    private static final String COLUMN_REPEAT ="repeat";
+//    private static final String COLUMN_REPEAT ="repeat";
 
 
 
@@ -41,8 +41,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_TIME + " TEXT PRIMARY KEY, " +
                 COLUMN_NAME + " TEXT, " +
-                COLUMN_ON_OR_OFF + " TEXT, " +
-                COLUMN_REPEAT + " TEXT);";
+                COLUMN_ON_OR_OFF + " TEXT);";
         db.execSQL(query);
 //להכניס לטבלה את הערכים
     }
@@ -55,7 +54,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void add(String name, String time, String onoroff, String repeat){
+    void add(String name, String time, String onoroff){
         SQLiteDatabase db = this.getWritableDatabase();
 //        onUpgrade(db,1,1);
         //להשתמש למחיקת הטבלה
@@ -65,7 +64,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_TIME, time);
         cv.put(COLUMN_ON_OR_OFF, onoroff);
-        cv.put(COLUMN_REPEAT, repeat);
+//        cv.put(COLUMN_REPEAT, repeat);
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
@@ -98,14 +97,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getOnOrOff ( String time){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("Select alarm_on_or_off from my_Library where alarm_time = ?", new String[]{time}, null );
+        return cursor;
+    }
 
-    void updateData(String name, String time, String on_off, String repeat ,String position_time){
+
+    void updateData(String name, String time, String on_off ,String position_time){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_TIME, time);
 //        cv.put(COLUMN_ON_OR_OFF, on_off);
-        cv.put(COLUMN_REPEAT, repeat);
+//        cv.put(COLUMN_REPEAT, repeat);
 
         long result = db.update(TABLE_NAME, cv, "alarm_time=?", new String[]{position_time});
         if(result == -1){
@@ -126,31 +131,48 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     void updateSwitchData(String time, String on_off) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
         Toast.makeText(context, "this is on or off: "+on_off,
                 Toast.LENGTH_SHORT).show();
 
         cv.put(COLUMN_ON_OR_OFF, on_off);
 
-        String[] parts = time.split(":", 2);
-        String P1 = parts[0];
-        Log.d(P1, "getAlarm_time_Hour: P1= "+P1);
-        int hour =Integer.parseInt(P1);
-        String P2 = parts[1];
-        Log.d(P2, "getAlarm_time_Minute: P2= "+P2);
-        int min =Integer.parseInt(P2);
+//        String[] parts = time.split(":", 2);
+//        String P1 = parts[0];
+//        Log.d(P1, "getAlarm_time_Hour: P1= "+P1);
+//        int hour =Integer.parseInt(P1);
+//        String P2 = parts[1];
+//        Log.d(P2, "getAlarm_time_Minute: P2= "+P2);
+//        int min =Integer.parseInt(P2);
 
 
-        String whereClause = COLUMN_TIME + " = '" + hour + ":" + min + "'";
-        long result = db.update(TABLE_NAME, cv, whereClause,null);
+//        String whereClause = COLUMN_TIME + " = '" + hour + ":" + min + "'";
+//        Cursor cursor = db.rawQuery("Select * from my_Library where alarm_time = ?",new String []{time});
+//
+//        String whereClause = COLUMN_TIME + " = '" + time + "'";
+//        long result = db.update(TABLE_NAME, cv, whereClause,null);
+        long result = db.update("my_Library",cv,"alarm_time=?",new String[]{time});
+
 
         if (result == -1) {
             Toast.makeText(context, "Failed",
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Updated Successfully!(Switch)",
+            Toast.makeText(context, "Updated Successfully!(Switch)"+" "+on_off,
                     Toast.LENGTH_SHORT).show();
 
         }
+
+//        if (cursor.getCount()>0)
+//        {
+//            if(result==-1)
+//                return false;
+//            else
+//                return true;
+//        }
+//        else
+//            return false;
+//    }
     }
 }
 

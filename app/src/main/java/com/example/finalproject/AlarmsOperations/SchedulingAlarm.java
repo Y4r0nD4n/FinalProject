@@ -1,5 +1,9 @@
 package com.example.finalproject.AlarmsOperations;
 
+//import static com.example.finalproject.AlarmReceiver.isRunning;
+
+import static com.example.finalproject.AlarmReceiver.startBackgroundService;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.finalproject.AlarmReceiver;
+import com.example.finalproject.BackgroundService;
 import com.example.finalproject.Cell;
 
 import java.util.Calendar;
@@ -21,7 +26,17 @@ public class SchedulingAlarm {
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_IMMUTABLE );
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        AlarmReceiver.setPendingIntent(pendingIntent);
+
+
+//        Intent serviceIntent = new Intent(context, BackgroundService.class);
+////        serviceIntent.setAction("com.example.ALARM_TRIGGERED");
+//        context.startService(serviceIntent);
+        startBackgroundService(context);
+
         Toast.makeText(context, "Alarm set ", Toast.LENGTH_LONG).show();
+
+
 
     }
 

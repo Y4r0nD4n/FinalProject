@@ -20,11 +20,11 @@ public class Cell {
 
     private ArrayList repeat;
 
-    public Cell( ArrayList alarm_name, ArrayList alarm_time, /*boolean onORoff*/ArrayList alarm_on_or_off,ArrayList repeat) {
+    public Cell( ArrayList alarm_name, ArrayList alarm_time, /*boolean onORoff*/ArrayList alarm_on_or_off) {
         this.alarm_name = alarm_name;
         this.alarm_time = alarm_time;
         this.alarm_on_or_off = alarm_on_or_off;
-        this.repeat = repeat;
+//        this.repeat = repeat;
     }
     public ArrayList getRepeat() {
         return repeat;

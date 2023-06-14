@@ -5,14 +5,22 @@
       <map>
         <entry key="..\:/Users/user/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/round_button.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/thump_swipe_button.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_about.xml" value="0.25" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_add.xml" value="0.264" />
-        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_barcode_scan.xml" value="0.25" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_rewriting.xml" value="0.25" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_shake.xml" value="0.25" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_turn_off_alarm.xml" value="0.25" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_update.xml" value="0.25" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/add_activity_finished_layout.xml" value="0.25" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/dialog_alert.xml" value="0.25" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/recycleritem_alarm.xml" value="0.264" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/layout/round_button.xml" value="0.22010869565217392" />
+        <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/menu/menu1.xml" value="0.25" />
         <entry key="..\:/Users/yaron/AndroidStudioProjects/FinalProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26614583333333336" />
       </map>
     </option>

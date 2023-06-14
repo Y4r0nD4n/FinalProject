@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.finalproject.AlarmsOperations.SchedulingAlarm;
+
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -35,9 +37,9 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 
     String name_update, time_update, on_or_off_update, repeat_update, position;
 
-    Button button_SU, button_MO, button_TU, button_WE, button_TH, button_FR, button_SA;
-    boolean flag_button_SU = false, flag_button_MO = false, flag_button_TU = false,
-            flag_button_WE = false, flag_button_TH = false, flag_button_FR = false, flag_button_SA = false;
+//    Button button_SU, button_MO, button_TU, button_WE, button_TH, button_FR, button_SA;
+//    boolean flag_button_SU = false, flag_button_MO = false, flag_button_TU = false,
+//            flag_button_WE = false, flag_button_TH = false, flag_button_FR = false, flag_button_SA = false;
 
 
     String savedTime;
@@ -61,21 +63,21 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         savedTime= getIntent().getStringExtra("alarm_time");
 
 
-        button_SU = findViewById(R.id.button_SU);
-        button_MO = findViewById(R.id.button_MO);
-        button_TU = findViewById(R.id.button_TU);
-        button_WE = findViewById(R.id.button_WE);
-        button_TH = findViewById(R.id.button_TH);
-        button_FR = findViewById(R.id.button_FR);
-        button_SA = findViewById(R.id.button_SA);
-
-        button_SU.setOnClickListener(this);
-        button_MO.setOnClickListener(this);
-        button_TU.setOnClickListener(this);
-        button_WE.setOnClickListener(this);
-        button_TH.setOnClickListener(this);
-        button_FR.setOnClickListener(this);
-        button_SA.setOnClickListener(this);
+//        button_SU = findViewById(R.id.button_SU);
+//        button_MO = findViewById(R.id.button_MO);
+//        button_TU = findViewById(R.id.button_TU);
+//        button_WE = findViewById(R.id.button_WE);
+//        button_TH = findViewById(R.id.button_TH);
+//        button_FR = findViewById(R.id.button_FR);
+//        button_SA = findViewById(R.id.button_SA);
+//
+//        button_SU.setOnClickListener(this);
+//        button_MO.setOnClickListener(this);
+//        button_TU.setOnClickListener(this);
+//        button_WE.setOnClickListener(this);
+//        button_TH.setOnClickListener(this);
+//        button_FR.setOnClickListener(this);
+//        button_SA.setOnClickListener(this);
 
 
 
@@ -91,46 +93,46 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 
             name_input_update.setHint(name_update);
             time_input_update_TV.setText(time_update);
-            setRepeat();
+//            setRepeat();
 //            on_or_off_input_update.setHint(on_or_off_update);
         }else{
             Toast.makeText(this,"NO DATA",Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setRepeat() {
-//        repeat_update;
-
-        if (repeat_update.charAt(0) == '1') {flag_button_SU = !flag_button_SU;}
-        if (repeat_update.charAt(1) == '1') {flag_button_MO = !flag_button_MO;}
-        if (repeat_update.charAt(2) == '1') {flag_button_TU = !flag_button_TU;}
-        if (repeat_update.charAt(3) == '1') {flag_button_WE = !flag_button_WE;}
-        if (repeat_update.charAt(4) == '1') {flag_button_TH = !flag_button_TH;}
-        if (repeat_update.charAt(5) == '1') {flag_button_FR = !flag_button_FR;}
-        if (repeat_update.charAt(6) == '1') {flag_button_SA = !flag_button_SA;}
-
-
-    }
-    void checkRepeat() {
-
-        if (flag_button_SU) {
-            repeat_input_insert = "1" + repeat_input_insert.substring(0 + 1);
-        } if (flag_button_MO) {
-            repeat_input_insert = repeat_input_insert.substring(0, 1) + "1" + repeat_input_insert.substring(1 + 1);
-        } if (flag_button_TU) {
-            repeat_input_insert = repeat_input_insert.substring(0, 2) + "1" + repeat_input_insert.substring(2 + 1);
-        } if (flag_button_WE) {
-            repeat_input_insert = repeat_input_insert.substring(0, 3) + "1" + repeat_input_insert.substring(3 + 1);
-        } if (flag_button_TH) {
-            repeat_input_insert = repeat_input_insert.substring(0, 4) + "1" + repeat_input_insert.substring(4 + 1);
-        } if (flag_button_FR) {
-            repeat_input_insert = repeat_input_insert.substring(0, 5) + "1" + repeat_input_insert.substring(5 + 1);
-        } if(flag_button_SA){
-            repeat_input_insert = repeat_input_insert.substring(0, 6) + "1" ;
-        }
-
-
-    }
+//    private void setRepeat() {
+////        repeat_update;
+//
+//        if (repeat_update.charAt(0) == '1') {flag_button_SU = !flag_button_SU;}
+//        if (repeat_update.charAt(1) == '1') {flag_button_MO = !flag_button_MO;}
+//        if (repeat_update.charAt(2) == '1') {flag_button_TU = !flag_button_TU;}
+//        if (repeat_update.charAt(3) == '1') {flag_button_WE = !flag_button_WE;}
+//        if (repeat_update.charAt(4) == '1') {flag_button_TH = !flag_button_TH;}
+//        if (repeat_update.charAt(5) == '1') {flag_button_FR = !flag_button_FR;}
+//        if (repeat_update.charAt(6) == '1') {flag_button_SA = !flag_button_SA;}
+//
+//
+//    }
+//    void checkRepeat() {
+//
+//        if (flag_button_SU) {
+//            repeat_input_insert = "1" + repeat_input_insert.substring(0 + 1);
+//        } if (flag_button_MO) {
+//            repeat_input_insert = repeat_input_insert.substring(0, 1) + "1" + repeat_input_insert.substring(1 + 1);
+//        } if (flag_button_TU) {
+//            repeat_input_insert = repeat_input_insert.substring(0, 2) + "1" + repeat_input_insert.substring(2 + 1);
+//        } if (flag_button_WE) {
+//            repeat_input_insert = repeat_input_insert.substring(0, 3) + "1" + repeat_input_insert.substring(3 + 1);
+//        } if (flag_button_TH) {
+//            repeat_input_insert = repeat_input_insert.substring(0, 4) + "1" + repeat_input_insert.substring(4 + 1);
+//        } if (flag_button_FR) {
+//            repeat_input_insert = repeat_input_insert.substring(0, 5) + "1" + repeat_input_insert.substring(5 + 1);
+//        } if(flag_button_SA){
+//            repeat_input_insert = repeat_input_insert.substring(0, 6) + "1" ;
+//        }
+//
+//
+//    }
 
 
     void checkAndSetInsertValues_update(){
@@ -151,7 +153,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 //                    on_or_off_input_update_insert = on_or_off_input_update.getText().toString();
 //            }
         repeat_input_insert = "0000000";
-        checkRepeat();
+//        checkRepeat();
 //        repeat_input_insert = repeat_update;
         on_or_off_input_update_insert = on_or_off_update;
         time_input_update_insert = time_input_update_TV.getText().toString();
@@ -162,39 +164,38 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         if(view == update_button){
 
-//            if(savedTime!=time_input_update_TV.getText().toString()) {
-//                Calendar c = Calendar.getInstance();
-//
-//                int h = getAlarm_time_Hour(savedTime);
-//                int m = getAlarm_time_Minute(savedTime);
-//                c.set(Calendar.HOUR_OF_DAY, h);
-//                c.set(Calendar.MINUTE, m);
-//                c.set(Calendar.SECOND, 0);
-//                if(c.before(Calendar.getInstance())){
-//                    c.add(Calendar.DATE,1);
-//                }
-//
-//                int id = h * 100 + m;
-//                scheduleAlarm(c, this, id);
-//
-//
-//
-//                Calendar calendar = Calendar.getInstance();
-//
-//                int h2 = getAlarm_time_Hour(time_input_update_TV.getText().toString());
-//                int m2 = getAlarm_time_Minute(time_input_update_TV.getText().toString());
-//                calendar.set(Calendar.HOUR_OF_DAY, h2);
-//                calendar.set(Calendar.MINUTE, m2);
-//                calendar.set(Calendar.SECOND, 0);
-//                if(calendar.before(Calendar.getInstance())){
-//                    calendar.add(Calendar.DATE,1);
-//                }
-//
-//                int id2 = h2 * 100 + m2;
-//                scheduleAlarm(c, this, id2);
-//
-////                makeAlarmOn();
-//            }
+            if(!savedTime.equals(time_input_update_TV.getText().toString())) {
+                Calendar c = Calendar.getInstance();
+
+                int h = SchedulingAlarm.getAlarm_time_Hour(savedTime);
+                int m = SchedulingAlarm.getAlarm_time_Minute(savedTime);
+                c.set(Calendar.HOUR_OF_DAY, h);
+                c.set(Calendar.MINUTE, m);
+                c.set(Calendar.SECOND, 0);
+                if(c.before(Calendar.getInstance())){
+                    c.add(Calendar.DATE,1);
+                }
+
+                int id = h * 100 + m;
+                SchedulingAlarm.cancelAlarm(c, this, id);
+
+
+
+                Calendar calendar = Calendar.getInstance();
+
+                int h2 = SchedulingAlarm.getAlarm_time_Hour(time_input_update_TV.getText().toString());
+                int m2 = SchedulingAlarm.getAlarm_time_Minute(time_input_update_TV.getText().toString());
+                calendar.set(Calendar.HOUR_OF_DAY, h2);
+                calendar.set(Calendar.MINUTE, m2);
+                calendar.set(Calendar.SECOND, 0);
+                if(calendar.before(Calendar.getInstance())){
+                    calendar.add(Calendar.DATE,1);
+                }
+
+                int id2 = h2 * 100 + m2;
+                SchedulingAlarm.scheduleAlarm(c, this, id2);
+
+            }
 
 
             checkAndSetInsertValues_update();
@@ -202,7 +203,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         myDB.updateData(name_input_update_insert.trim(),
                 time_input_update_insert.trim(),
                 on_or_off_input_update_insert.trim(),
-                repeat_input_insert.trim(),
                 time_update);
 
 
@@ -210,7 +210,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 //// refresh database and main activity (and send to)
 
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("refresh",1);
+//            intent.putExtra("refresh",1);
 //            activity.startActivityForResult(intent, 1);
 
             startActivity(intent);
@@ -236,26 +236,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 
         }
 
-        if(view == button_SU || view == button_MO || view == button_TU
-                || view == button_WE || view == button_TH || view == button_FR || view == button_SA) {
-
-            if (view == button_SU) {
-                flag_button_SU = !flag_button_SU;
-
-            } else if (view == button_MO) {
-                flag_button_MO = !flag_button_MO;
-            } else if (view == button_TU) {
-                flag_button_TU = !flag_button_TU;
-            } else if (view == button_WE) {
-                flag_button_WE = !flag_button_WE;
-            } else if (view == button_TH) {
-                flag_button_TH = !flag_button_TH;
-            } else if (view == button_FR) {
-                flag_button_FR = !flag_button_FR;
-            } else {
-                flag_button_SA = !flag_button_SA;
-            }
-        }
 
     }
 

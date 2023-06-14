@@ -1,12 +1,22 @@
 package com.example.finalproject;
 
+import static com.example.finalproject.AlarmReceiver.isAlarmRunning;
+
+import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -18,7 +28,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject.AlarmsOperations.SchedulingAlarm;
 import com.example.finalproject.Interface.RecyclerViewInterface;
+import com.example.finalproject.Tasks.BarcodeScanActivity;
+import com.example.finalproject.Tasks.Rewriting;
+import com.example.finalproject.Tasks.Shake;
 import com.example.finalproject.adapters.CellAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,10 +59,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
 
     MyDatabaseHelper myDB;
-    ArrayList<String> alarm_name, alarm_time, alarm_on_or_off, repeat;
+    ArrayList<String> alarm_name, alarm_time, alarm_on_or_off;
 
-    String refresh;
-//    CustomAdapter customAdapter;
+//    String refresh;
+////    CustomAdapter customAdapter;
 
 
 
@@ -60,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         clearalldata = findViewById(R.id.clearalldata);
         clearalldata.setOnClickListener(this);
 
+
+
+
         recyclerview = findViewById(R.id.recyclerview);
         add_button = findViewById(R.id.AddBtn);
 
@@ -69,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         alarm_name =new ArrayList<>();
         alarm_time =new ArrayList<>();
         alarm_on_or_off =new ArrayList<>();
-        repeat =new ArrayList<>();
+//        repeat =new ArrayList<>();
 
 
         recyclerview = findViewById(R.id.recyclerview);
@@ -92,18 +109,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 //        recyclerview.setAdapter(customAdapter);
 //        recyclerview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-
+    if(isAlarmRunning()){
+        Intent intent = new Intent(MainActivity.this, Rewriting.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     }
 
-    void refreshActivity(){
-        if(getIntent().hasExtra("refresh"))
-            refresh = getIntent().getStringExtra("refresh");
-                if(refresh == "1"){
-                            recreate();
-                        }
-
-        }
+//    void refreshActivity(){
+//        if(getIntent().hasExtra("refresh"))
+//            refresh = getIntent().getStringExtra("refresh");
+//                if(refresh == "1"){
+//                            recreate();
+//                        }
+//
+//        }
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -136,10 +157,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 alarm_time.add(cursor.getString(0));
                 alarm_name.add(cursor.getString(1));
                 alarm_on_or_off.add(cursor.getString(2));
-                repeat.add(cursor.getString(3));
+               // repeat.add(cursor.getString(3));
 
                 //set the cell
-                cells.add(new Cell(alarm_name, alarm_time, alarm_on_or_off, repeat));
+                cells.add(new Cell(alarm_name, alarm_time, alarm_on_or_off));
 
             }
 //            empty_imageview.setVisibility(View.GONE);
@@ -155,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         intent.putExtra("alarm_name",String.valueOf(alarm_name.get(position)));
         intent.putExtra("alarm_time",String.valueOf(alarm_time.get(position)));
         intent.putExtra("alarm_on_or_off",String.valueOf(alarm_on_or_off.get(position)));
-        intent.putExtra("repeat",String.valueOf(repeat.get(position)));
+        //intent.putExtra("repeat",String.valueOf(repeat.get(position)));
         intent.putExtra("position",String.valueOf(position));
 
 
@@ -167,21 +188,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-//                Calendar c = Calendar.getInstance();
-//
-//                int h = getAlarm_time_Hour(btnTime.getText().toString());
-//                int m = getAlarm_time_Minute(btnTime.getText().toString());
-//                c.set(Calendar.HOUR_OF_DAY, h);
-//                c.set(Calendar.MINUTE, m );
-//                c.set(Calendar.SECOND,0);
-//
-////                if(c.before(Calendar.getInstance())){
-////                    c.add(Calendar.DATE,1);
-////                }
-//
-//
-//                int id = h*100+m;
-//                cancelAlarm(c,MainActivity.this, id);
+
+                Calendar c = Calendar.getInstance();
+
+                int h = SchedulingAlarm.getAlarm_time_Hour(btnTime.getText().toString());
+                int m = SchedulingAlarm.getAlarm_time_Minute(btnTime.getText().toString());
+                c.set(Calendar.HOUR_OF_DAY, h);
+                c.set(Calendar.MINUTE, m );
+                c.set(Calendar.SECOND,0);
+
+                if(c.before(Calendar.getInstance())){
+                    c.add(Calendar.DATE,1);
+                }
+
+
+                int id = h*100+m;
+                SchedulingAlarm.cancelAlarm(c,MainActivity.this, id);
 
                 hour = selectedHour;
                 minutes = selectedMinute;
@@ -192,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
                 String name = String.valueOf(alarm_name.get(position));
                 String on_or_off = String.valueOf(alarm_on_or_off.get(position));
-                String repeatt = String.valueOf(repeat.get(position));
+//                String repeatt = String.valueOf(repeat.get(position));
                 String time = btnTime.getText().toString();
                 String time_position = String.valueOf(alarm_time.get(position));
 
@@ -204,22 +226,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                 myDB.updateData(name.trim(),
                         time.trim(),
                         on_or_off.trim(),
-                        repeatt.trim(),
                         time_position);
 
 
 
-//                calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-//                calendar.set(Calendar.MINUTE, selectedMinute);
-//                calendar.set(Calendar.SECOND,0);
-////                if(calendar.before(Calendar.getInstance())){
-////                    calendar.add(Calendar.DATE,1);
-////                }
-//
-//                int id2 = selectedHour*100+selectedMinute;
-//                Log.d("IDSET2", "onClick: IDSET "+ id2);
-//
-//                scheduleAlarm(calendar, MainActivity.this, id2);
+                String flag = currentCell.isCellOnOrOff(position)? "on":"off";
+                if(flag.equals("on")) {
+                    calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                    calendar.set(Calendar.MINUTE, selectedMinute);
+                    calendar.set(Calendar.SECOND, 0);
+                    if (calendar.before(Calendar.getInstance())) {
+                        calendar.add(Calendar.DATE, 1);
+                    }
+
+                    int id2 = selectedHour * 100 + selectedMinute;
+                    Log.d("IDSET2", "onClick: IDSET " + id2);
+
+                    SchedulingAlarm.scheduleAlarm(calendar, MainActivity.this, id2);
+                }
 
 
             }
@@ -237,20 +261,48 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
         timePickerDialog.show();
     }
-
+//    StringBuffer stringBuffer;
     @Override
-    public void onSwitchClick(int position/*, String flag*/) {
+    public void onSwitchClick(int position) {
 
-        String name = String.valueOf(alarm_name.get(position));
-        String repeatt = String.valueOf(repeat.get(position));
+//        String name = String.valueOf(alarm_name.get(position));
+//        String repeatt = String.valueOf(repeat.get(position));
         String time = String.valueOf(alarm_time.get(position));
-        String time_position = String.valueOf(alarm_time.get(position));
+//        String time_position = String.valueOf(alarm_time.get(position));
 
-
-
+//
+//        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(this);
+//         stringBuffer = null;
+//        Cursor cursor = myDatabaseHelper.getOnOrOff(time);
+//
+//
+//        if (cursor.getCount()!=0){
+//            stringBuffer = new StringBuffer();
+//            while (cursor.moveToNext()){
+//                stringBuffer = stringBuffer.append(cursor.getString(0));
+//            }
+//        }
         Cell currentCell = cells.get(position);
-        String flag = currentCell.isCellOnOrOff(position)? "off":"on";
 
+        String flag = currentCell.isCellOnOrOff(position)? "on":"off";
+//        String flag1 = String.valueOf(stringBuffer);
+
+        if(flag.equals("on")){
+            Log.d("SwitchState", "The Switch is " + flag);
+//            BtnSwitch.setChecked(true);
+            flag = "off";
+        }
+        else{
+            Log.d("SwitchState", "The Switch is " + flag);
+            flag = "on";
+
+
+        }
+
+
+//        Cell currentCell = cells.get(position);
+//        String flag1 = currentCell.isCellOnOrOff(position)? "off":"on";
+//
         currentCell.ChangeInfoSwitch(position, flag);
 
 
@@ -259,36 +311,35 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 //        myDB.updateData(name.trim(),
 //                time.trim(),
 //                flag.trim(),
-//                repeatt.trim(),
-//                time_position);
+//               time_position);
 
 
-
+    
 //        final  Intent serviceIntent = new Intent(this, AlarmReceiver.class);
-//        Calendar c = Calendar.getInstance();
-//        int h = getAlarm_time_Hour(time);
-//        int m =  getAlarm_time_Minute(time);
-//        c.set(Calendar.HOUR_OF_DAY, h);
-//        c.set(Calendar.MINUTE,m );
-//        c.set(Calendar.SECOND,0);
-//
-//        if(c.before(Calendar.getInstance())){
-//            c.add(Calendar.DATE,1);
-//        }
-//
-//        int id = h*100+m;
-//
-//        if (flag.equals("off")) {
-//
-//            cancelAlarm(c,MainActivity.this, id);
-//
-////            serviceIntent.putExtra("extra","off");
-//        }
-//        else {
-//            scheduleAlarm(c, MainActivity.this, id);
-////            serviceIntent.putExtra("extra","on");
-//
-//        }
+        Calendar c = Calendar.getInstance();
+        int h = SchedulingAlarm.getAlarm_time_Hour(time);
+        int m =  SchedulingAlarm.getAlarm_time_Minute(time);
+        c.set(Calendar.HOUR_OF_DAY, h);
+        c.set(Calendar.MINUTE,m );
+        c.set(Calendar.SECOND,0);
+
+        if(c.before(Calendar.getInstance())){
+            c.add(Calendar.DATE,1);
+        }
+
+        int id = h*100+m;
+
+        if (flag.equals("off")) {
+
+            SchedulingAlarm.cancelAlarm(c,MainActivity.this, id);
+
+//            serviceIntent.putExtra("extra","off");
+        }
+        else {
+            SchedulingAlarm.scheduleAlarm(c, MainActivity.this, id);
+//            serviceIntent.putExtra("extra","on");
+
+        }
 
     }
 
@@ -347,5 +398,79 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
         }
 
+
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+
+        AlertDialog.Builder alertDialog =new AlertDialog.Builder(this);
+
+        LayoutInflater layoutInflater = getLayoutInflater();
+
+        final View v = layoutInflater.inflate(R.layout.dialog_alert, null);
+
+        alertDialog.setView(v);
+
+        Button yes, no;
+
+        yes = v.findViewById(R.id.yes_btn);
+        no = v.findViewById(R.id.no_btn);
+
+        AlertDialog alert = alertDialog.create();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                finish();
+                finishAffinity ();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+
+
+        alert.show();
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu1,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.about){
+            Intent intent = new Intent(this,About.class);
+
+            startActivity(intent);
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static void changeFromOnToOffAfterAlarm(PendingIntent pendingIntent){
+
+//        pendingIntent.get
+
+    }
+
 }
+
