@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import static android.icu.text.MessagePattern.ArgType.SELECT;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.finalproject.AlarmsOperations.SchedulingAlarm;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
@@ -54,21 +59,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void add(String name, String time, String onoroff){
+    void add(String name, String time, String onoroff) {
         SQLiteDatabase db = this.getWritableDatabase();
-//        onUpgrade(db,1,1);
-        //להשתמש למחיקת הטבלה
+
+        // Check if there is an existing alarm with the same time
+        if (isAlarmExists(time)) {
+            // An alarm with the same time already exists, show a message or handle it as needed
+            Toast.makeText(context, "An alarm with the same time already exists", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         ContentValues cv = new ContentValues();
-
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_TIME, time);
         cv.put(COLUMN_ON_OR_OFF, onoroff);
-//        cv.put(COLUMN_REPEAT, repeat);
-        long result = db.insert(TABLE_NAME,null, cv);
-        if(result == -1){
+
+        long result = db.insert(TABLE_NAME, null, cv);
+        if (result == -1) {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -81,6 +90,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -104,25 +114,38 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    void updateData(String name, String time, String on_off ,String position_time){
+    boolean isAlarmExists(String time) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TIME + "=?", new String[]{time});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+
+        return exists;
+    }
+
+    void updateData(String name, String time, String on_off, String position_time) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // Check if there is an existing alarm with the same time
+        if (isAlarmExists(time)) {
+            // An alarm with the same time already exists, show a message or handle it as needed
+            Toast.makeText(context, "An alarm with the same time already exists", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_TIME, time);
-//        cv.put(COLUMN_ON_OR_OFF, on_off);
-//        cv.put(COLUMN_REPEAT, repeat);
 
         long result = db.update(TABLE_NAME, cv, "alarm_time=?", new String[]{position_time});
-        if(result == -1){
-            Toast.makeText(context, "Failed",
-                    Toast.LENGTH_SHORT).show();
+        if (result == -1) {
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Updated Successfully!(VWAT)", Toast.LENGTH_SHORT).show();
         }
-        else {
-            Toast.makeText(context, "Updated Successfully!(VWAT)",
-                    Toast.LENGTH_SHORT).show();
-        }
-
     }
+
     void clearAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         onUpgrade(db,1,1);
@@ -137,20 +160,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_ON_OR_OFF, on_off);
 
-//        String[] parts = time.split(":", 2);
-//        String P1 = parts[0];
-//        Log.d(P1, "getAlarm_time_Hour: P1= "+P1);
-//        int hour =Integer.parseInt(P1);
-//        String P2 = parts[1];
-//        Log.d(P2, "getAlarm_time_Minute: P2= "+P2);
-//        int min =Integer.parseInt(P2);
-
-
-//        String whereClause = COLUMN_TIME + " = '" + hour + ":" + min + "'";
-//        Cursor cursor = db.rawQuery("Select * from my_Library where alarm_time = ?",new String []{time});
-//
-//        String whereClause = COLUMN_TIME + " = '" + time + "'";
-//        long result = db.update(TABLE_NAME, cv, whereClause,null);
         long result = db.update("my_Library",cv,"alarm_time=?",new String[]{time});
 
 
@@ -163,16 +172,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         }
 
-//        if (cursor.getCount()>0)
-//        {
-//            if(result==-1)
-//                return false;
-//            else
-//                return true;
-//        }
-//        else
-//            return false;
-//    }
     }
+
+    public List<String> getSavedKeys() {
+        List<String> keys = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_TIME};
+        String selection = COLUMN_ON_OR_OFF + " = ?";
+        String[] selectionArgs = {"on"};
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String key = cursor.getString(cursor.getColumnIndex(COLUMN_TIME));
+            keys.add(key);
+        }
+
+        cursor.close();
+        db.close();
+
+        return keys;
+    }
+
 }
 

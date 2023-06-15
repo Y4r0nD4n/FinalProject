@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,14 +37,18 @@ import com.example.finalproject.Tasks.Shake;
 import com.example.finalproject.adapters.CellAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface, View.OnClickListener {
 
     Button clearalldata;
-
+    TextView ScheduledAlarmsText;
 //    public static String activeAlarm = "";
 //    private  static final int REQUEST_CODE = 1000;
     RecyclerView recyclerview;
@@ -71,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ScheduledAlarmsText = findViewById(R.id.ScheduledAlarmsText);
+        nextAlarm();
+
         clearalldata = findViewById(R.id.clearalldata);
         clearalldata.setOnClickListener(this);
-
-
-
 
         recyclerview = findViewById(R.id.recyclerview);
         add_button = findViewById(R.id.AddBtn);
@@ -117,34 +122,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     }
 
-//    void refreshActivity(){
-//        if(getIntent().hasExtra("refresh"))
-//            refresh = getIntent().getStringExtra("refresh");
-//                if(refresh == "1"){
-//                            recreate();
-//                        }
-//
-//        }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == 1){
-//            recreate();
-////            startActivity(getIntent());
-////            finish();
-////            overridePendingTransition(0, 0);
-//        }
-//    }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if(requestCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-//            boolean needRefresh = data.getExtras().getBoolean("needRefresh");
-//        }
-//    }
 
     void storeDataInArrays(){
         Cursor cursor = myDB.readAllData();
@@ -188,64 +165,68 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute);
+                if (!myDB.isAlarmExists(formattedTime)) {
+                    Calendar c = Calendar.getInstance();
 
-                Calendar c = Calendar.getInstance();
+                    int h = SchedulingAlarm.getAlarm_time_Hour(btnTime.getText().toString());
+                    int m = SchedulingAlarm.getAlarm_time_Minute(btnTime.getText().toString());
+                    c.set(Calendar.HOUR_OF_DAY, h);
+                    c.set(Calendar.MINUTE, m);
+                    c.set(Calendar.SECOND, 0);
 
-                int h = SchedulingAlarm.getAlarm_time_Hour(btnTime.getText().toString());
-                int m = SchedulingAlarm.getAlarm_time_Minute(btnTime.getText().toString());
-                c.set(Calendar.HOUR_OF_DAY, h);
-                c.set(Calendar.MINUTE, m );
-                c.set(Calendar.SECOND,0);
-
-                if(c.before(Calendar.getInstance())){
-                    c.add(Calendar.DATE,1);
-                }
-
-
-                int id = h*100+m;
-                SchedulingAlarm.cancelAlarm(c,MainActivity.this, id);
-
-                hour = selectedHour;
-                minutes = selectedMinute;
-
-                btnTime.setText(String.format(Locale.getDefault(),"%02d:%02d",hour, minutes));
-
-
-
-                String name = String.valueOf(alarm_name.get(position));
-                String on_or_off = String.valueOf(alarm_on_or_off.get(position));
-//                String repeatt = String.valueOf(repeat.get(position));
-                String time = btnTime.getText().toString();
-                String time_position = String.valueOf(alarm_time.get(position));
-
-                Cell currentCell = cells.get(position);
-                currentCell.ChangeInfoTime(position, time);
-
-
-                MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
-                myDB.updateData(name.trim(),
-                        time.trim(),
-                        on_or_off.trim(),
-                        time_position);
-
-
-
-                String flag = currentCell.isCellOnOrOff(position)? "on":"off";
-                if(flag.equals("on")) {
-                    calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-                    calendar.set(Calendar.MINUTE, selectedMinute);
-                    calendar.set(Calendar.SECOND, 0);
-                    if (calendar.before(Calendar.getInstance())) {
-                        calendar.add(Calendar.DATE, 1);
+                    if (c.before(Calendar.getInstance())) {
+                        c.add(Calendar.DATE, 1);
                     }
 
-                    int id2 = selectedHour * 100 + selectedMinute;
-                    Log.d("IDSET2", "onClick: IDSET " + id2);
 
-                    SchedulingAlarm.scheduleAlarm(calendar, MainActivity.this, id2);
+                    int id = h * 100 + m;
+                    SchedulingAlarm.cancelAlarm(c, MainActivity.this, id);
+
+                    hour = selectedHour;
+                    minutes = selectedMinute;
+
+                    btnTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minutes));
+
+
+                    String name = String.valueOf(alarm_name.get(position));
+                    String on_or_off = String.valueOf(alarm_on_or_off.get(position));
+//                String repeatt = String.valueOf(repeat.get(position));
+                    String time = btnTime.getText().toString();
+                    String time_position = String.valueOf(alarm_time.get(position));
+
+                    Cell currentCell = cells.get(position);
+                    currentCell.ChangeInfoTime(position, time);
+
+
+                    MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                    myDB.updateData(name.trim(),
+                            time.trim(),
+                            on_or_off.trim(),
+                            time_position);
+
+
+                    String flag = currentCell.isCellOnOrOff(position) ? "on" : "off";
+                    if (flag.equals("on")) {
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        calendar.set(Calendar.MINUTE, selectedMinute);
+                        calendar.set(Calendar.SECOND, 0);
+                        if (calendar.before(Calendar.getInstance())) {
+                            calendar.add(Calendar.DATE, 1);
+                        }
+
+                        int id2 = selectedHour * 100 + selectedMinute;
+                        Log.d("IDSET2", "onClick: IDSET " + id2);
+
+                        SchedulingAlarm.scheduleAlarm(calendar, MainActivity.this, id2);
+                        nextAlarm();
+
+                    }
+
+
                 }
-
-
+                else
+                    Toast.makeText(MainActivity.this, "An alarm with the same time already exists", Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -332,11 +313,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         if (flag.equals("off")) {
 
             SchedulingAlarm.cancelAlarm(c,MainActivity.this, id);
+            nextAlarm();
 
 //            serviceIntent.putExtra("extra","off");
         }
         else {
             SchedulingAlarm.scheduleAlarm(c, MainActivity.this, id);
+            nextAlarm();
+
+//
 //            serviceIntent.putExtra("extra","on");
 
         }
@@ -377,9 +362,33 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
             View itemView =  viewHolder.itemView;
             Button btnTime = itemView.findViewById(R.id.btnTime);
-            MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
-            myDB.delete( btnTime.getText().toString());
 
+            String position_time = btnTime.getText().toString();
+
+
+            MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+            myDB.delete( position_time);
+
+
+            // Cancel the deleted alarm
+            Calendar c = Calendar.getInstance();
+            int h = SchedulingAlarm.getAlarm_time_Hour(position_time);
+            int m =  SchedulingAlarm.getAlarm_time_Minute(position_time);
+            c.set(Calendar.HOUR_OF_DAY, h);
+            c.set(Calendar.MINUTE,m );
+            c.set(Calendar.SECOND,0);
+
+            if(c.before(Calendar.getInstance())){
+                c.add(Calendar.DATE,1);
+            }
+
+            int id = h*100+m;
+//            AlarmScheduler.cancelAlarm(context, position_time);
+            SchedulingAlarm.cancelAlarm(c,MainActivity.this, id);
+
+            nextAlarm();
+            Intent serviceIntent = new Intent(MainActivity.this, BackgroundService.class);
+            MainActivity.this.stopService(serviceIntent);
         }
     };
 
@@ -466,11 +475,45 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         return super.onOptionsItemSelected(item);
     }
 
-    public static void changeFromOnToOffAfterAlarm(PendingIntent pendingIntent){
+    public void nextAlarm(){
+        MyDatabaseHelper databaseHelper = new MyDatabaseHelper(this);
+        List<String> savedKeys = databaseHelper.getSavedKeys();
 
-//        pendingIntent.get
 
+        String smallestTime = null;
+
+// Iterate through the list of saved keys
+        for (String key : savedKeys) {
+            if (smallestTime == null) {
+                smallestTime = key;
+            } else {
+                smallestTime = getSmallerTime(smallestTime, key);
+            }
+        }
+//        Toast.makeText(this, "key "+smallestTime, Toast.LENGTH_LONG).show();
+        if( smallestTime ==  null)
+            smallestTime ="never";
+
+        ScheduledAlarmsText.setText("The next alarm is at "+ smallestTime);
     }
 
-}
+    private static String getSmallerTime(String time1, String time2) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+        try {
+            Date date1 = format.parse(time1);
+            Date date2 = format.parse(time2);
+
+            if (date1.before(date2)) {
+                return time1;
+            } else {
+                return time2;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Handle parse exception if necessary
+        }
+
+        return ""; // Return a default value if comparison fails
+    }}
 

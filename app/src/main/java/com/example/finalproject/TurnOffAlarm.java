@@ -9,9 +9,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.example.finalproject.ObjectSharedPreferences.MyObject;
+import com.example.finalproject.ObjectSharedPreferences.MyObjectListManager;
+
+import java.util.List;
 
 public class TurnOffAlarm extends AppCompatActivity {
 
@@ -45,12 +52,27 @@ public class TurnOffAlarm extends AppCompatActivity {
                         AlarmReceiver.stopAlarm();
 
                         Intent serviceIntent = new Intent(TurnOffAlarm.this, BackgroundService.class);
-//            serviceIntent.setAction("com.example.ALARM_TRIGGERED");
                         TurnOffAlarm.this.stopService(serviceIntent);
+
+//                        MyDatabaseHelper myDB = new MyDatabaseHelper(TurnOffAlarm.this);
+//                        myDB.updateSwitchData(rebuildId( pendingIntent.getIntentSender().getCreatorUid()), "off");
+
+//                        rebuildId( pendingIntent.getIntentSender().getCreatorUid());
+//
+//
+//                        MyObjectListManager objectListManager = new MyObjectListManager(TurnOffAlarm.this);
+//
+//                        // Retrieve the list of objects
+//                        List<MyObject> retrievedList = objectListManager.getObjectList();
+//
+//                        // Display the retrieved list
+//                        for (MyObject object : retrievedList) {
+//                            Log.d("MyObject", "ID: " + object.getId() + ", Name: " + object.getName());
+//                        }
 
 
                         Intent newActivityIntent = new Intent(TurnOffAlarm.this, MainActivity.class);
-//        finish(); // Close the current activity if needed
+//                       finish(); // Close the current activity if needed
                         startActivity(newActivityIntent);
 
                         // Additional logic here if needed
@@ -62,6 +84,15 @@ public class TurnOffAlarm extends AppCompatActivity {
         });
 
 
+    }
+
+    public  String rebuildId(int id){
+
+        String s = String.valueOf(id);
+
+        Toast.makeText(this, "this is the ID "+id, Toast.LENGTH_LONG).show();
+
+        return s;
     }
 
     @Override

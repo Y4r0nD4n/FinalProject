@@ -17,11 +17,15 @@ import android.widget.Toast;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
-import static com.example.finalproject.MainActivity.changeFromOnToOffAfterAlarm;
+//import static com.example.finalproject.MainActivity.changeFromOnToOffAfterAlarm;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.finalproject.Tasks.Rewriting;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -29,10 +33,16 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static PendingIntent pendingIntent;
 
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String s = dateFormat.format(calendar.getTime()).toString();
 
+        MyDatabaseHelper myDB = new MyDatabaseHelper(context);
+        myDB.updateSwitchData(s, "off");
 
 
         // vibrator
@@ -93,19 +103,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
     public static void stopAlarm() {
         isRunning = false;
-
-        changeFromOnToOffAfterAlarm(pendingIntent);
-//        pendingIntent.
     }
     public static void setPendingIntent(PendingIntent intent) {
         pendingIntent = intent;
     }
     public static boolean isAlarmRunning() {
         return isRunning;
-    }
-    public static void startBackgroundService(Context context) {
-        Intent intent = new Intent(context, BackgroundService.class);
-        context.startService(intent);
     }
 
 

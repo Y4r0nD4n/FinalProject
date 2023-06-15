@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -68,8 +70,30 @@ public class Rewriting extends AppCompatActivity {
 
     }
 
-
-
+//    public static void setContrastTextColor(TextView textView) {
+//        Drawable background = textView.getBackground(); // Get background drawable
+//
+//        if (background != null) {
+//            int backgroundColor = Color.TRANSPARENT;
+//
+//            if (background instanceof ColorDrawable) {
+//                backgroundColor = ((ColorDrawable) background).getColor(); // Get background color
+//            }
+//
+//            if (isColorDark(backgroundColor)) {
+//                textView.setTextColor(Color.WHITE); // Set white text color for dark background
+//            } else {
+//                textView.setTextColor(Color.BLACK); // Set black text color for light background
+//            }
+//        }
+//    }
+//
+//    private static boolean isColorDark(int color) {
+//        // Calculate the perceived brightness of the color
+//        double perceivedBrightness = (Color.red(color) * 0.299 + Color.green(color) * 0.587 + Color.blue(color) * 0.114);
+//
+//        return perceivedBrightness < 128; // Consider colors with perceived brightness less than 128 as dark
+//    }
     public void crateRandomCharString(){
         String AllCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
         StringBuilder sb = new StringBuilder(10);

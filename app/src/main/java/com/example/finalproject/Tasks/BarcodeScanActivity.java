@@ -38,7 +38,7 @@ public class BarcodeScanActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private TextView countdownTextView;
-
+    boolean scanned = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +68,7 @@ public class BarcodeScanActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                if(!scanned){
                 Toast.makeText(BarcodeScanActivity.this, "Success!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = getIntent();
@@ -78,7 +79,7 @@ public class BarcodeScanActivity extends AppCompatActivity {
                 Intent newActivityIntent = new Intent(BarcodeScanActivity.this, Rewriting.class);
                 newActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 newActivityIntent.putExtra("pendingIntent", pendingIntent);
-                startActivity(newActivityIntent);
+                startActivity(newActivityIntent);}
             }
         }.start();
     }
@@ -157,6 +158,8 @@ public class BarcodeScanActivity extends AppCompatActivity {
                     // Perform any additional processing or validation if needed
                     // For simplicity, we are directly displaying a toast message
                     runOnUiThread( () ->{ Toast.makeText(BarcodeScanActivity.this, "Good job! Barcode: " + barcodeValue, Toast.LENGTH_SHORT).show();
+                    scanned = true;
+
                         Intent intent = getIntent();
                         if (intent != null) {
                             pendingIntent = intent.getParcelableExtra("pendingIntent");

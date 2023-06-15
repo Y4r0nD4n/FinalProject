@@ -79,9 +79,9 @@ public class BackgroundService extends Service {
             mp.release();
             mp = null;
         }
-        stopForegroundService();
+
+        stopForegroundServices();
         Log.d("Foreground", "this was activated " );
-        Toast.makeText(this, "Foreground was distorted ", Toast.LENGTH_LONG).show();
 
 
         super.onDestroy();
@@ -114,16 +114,19 @@ public class BackgroundService extends Service {
         return builder.build();
     }
 
-    private void stopForegroundService() {
+    private void stopForegroundServices() {
         if (isForeground) {
             // Stop the foreground state and remove the notification
             stopForeground(true);
 
             // Stop the service
             stopSelf();
+            Toast.makeText(this, "Foreground was destroyed ", Toast.LENGTH_LONG).show();
 
             isForeground = false;
         }
     }
+
+
 
 }
